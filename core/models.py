@@ -50,7 +50,21 @@ class Viagem(models.Model):
         max_length=20,
         choices=STATUS_CHOICES,
         default="andamento"
-    )
+    )   
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.checklist.exists():
+            itens = self.mochila.mochilaitem_set.all()
+
+            ChecklistItem.objects.bulk_create([
+                ChecklistItem(
+                    viagem=self,
+                    item=mi.item,
+                    quantidade=mi.quantidade
+                )
+                for mi in itens
+            ])
 
     def __str__(self):
         return f"Viagem {self.id} - {self.loja}"
@@ -62,7 +76,7 @@ class ChecklistItem(models.Model):
     quantidade = models.PositiveIntegerField(default=1)
 
     saida_ok = models.BooleanField(default=True)
-    retorno_ok = models.BooleanField(default=True)
+    retorno_ok = models.BooleanField(default=False)
 
     observacao_retorno = models.CharField(max_length=100, blank=True)
 

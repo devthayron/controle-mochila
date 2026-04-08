@@ -22,6 +22,7 @@ class MochilaItemInline(admin.TabularInline):
 
 @admin.register(Mochila)
 class MochilaAdmin(admin.ModelAdmin):
+    inlines = [MochilaItemInline]
     form = MochilaForm
     list_display = ["id", "nome"]
 

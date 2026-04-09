@@ -7,7 +7,6 @@ class LojaAdmin(admin.ModelAdmin):
     search_fields = ["nome"]
     list_display = ["id", "nome"]
 
-
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     search_fields = ["nome"]
@@ -18,7 +17,6 @@ class MochilaItemInline(admin.TabularInline):
     extra = 1
     autocomplete_fields = ['item']
     fields = ['item', 'quantidade']
-    show_change_link = True
 
 @admin.register(Mochila)
 class MochilaAdmin(admin.ModelAdmin):

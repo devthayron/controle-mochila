@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Itens — TI Armazém Paraíba{% endblock %}
+{% block nav_itens %}active{% endblock %}
+
+{% block breadcrumb %}
+    <span class="sep">/</span>
+    <span class="current">Itens / Equipamentos</span>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-header-left">
+        <h1>Equipamentos</h1>
+        <p>Catálogo de itens disponíveis para composição das mochilas</p>
+    </div>
+    <div class="page-header-right">
+        <a href="/admin/core/item/add/" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Novo Equipamento
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Total: {{ itens.count }} item(ns)</h2>
+        <a href="/admin/core/item/" class="btn btn-ghost btn-sm">
+            <i class="fa-solid fa-sliders"></i> Gerenciar no Admin
+        </a>
+    </div>
+    {% if itens %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Mochilas que contém</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in itens %}
+            <tr>
+                <td style="font-family:'DM Mono',monospace;font-size:.8rem;color:var(--text-muted);">{{ item.id }}</td>
+                <td>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="width:32px;height:32px;background:rgba(168,85,247,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#C084FC;flex-shrink:0;font-size:.8rem;">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <span style="font-weight:500;">{{ item.nome }}</span>
+                    </div>
+                </td>
+                <td class="muted">
+                    {% with count=item.mochilas.count %}
+                    {% if count %}
+                        <span class="badge badge-blue">{{ count }} mochila(s)</span>
+                    {% else %}
+                        <span style="color:var(--text-muted);font-size:.8rem;">Não utilizado</span>
+                    {% endif %}
+                    {% endwith %}
+                </td>
+                <td>
+                    <a href="/admin/core/item/{{ item.pk }}/change/" class="btn btn-ghost btn-sm" title="Editar">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+        <h3>Nenhum equipamento cadastrado</h3>
+        <p>Cadastre os equipamentos para criar mochilas.</p>
+        <a href="/admin/core/item/add/" class="btn btn-primary" style="margin-top:8px;">
+            <i class="fa-solid fa-plus"></i> Cadastrar Equipamento
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

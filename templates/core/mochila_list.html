@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Mochilas — TI Armazém Paraíba{% endblock %}
+{% block nav_mochilas %}active{% endblock %}
+
+{% block breadcrumb %}
+    <span class="sep">/</span>
+    <span class="current">Mochilas</span>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-header-left">
+        <h1>Mochilas</h1>
+        <p>Gerencie os kits de equipamentos disponíveis</p>
+    </div>
+    <div class="page-header-right">
+        <a href="/admin/core/mochila/add/" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Nova Mochila
+        </a>
+    </div>
+</div>
+
+{% if mochilas %}
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+{% for m in mochilas %}
+<div class="card" style="transition:border-color .2s,transform .2s;cursor:default;">
+    <div style="padding:20px 22px 16px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:42px;height:42px;background:rgba(59,130,246,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#60A5FA;font-size:1rem;flex-shrink:0;">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div>
+                    <div style="font-weight:700;font-size:.95rem;">{{ m.nome }}</div>
+                    <div style="font-size:.75rem;color:var(--text-muted);">{{ m.mochilaitem_set.count }} equipamento(s)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ITENS PREVIEW -->
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+        {% for mi in m.mochilaitem_set.all|slice:":5" %}
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg-base);border-radius:6px;border:1px solid var(--border);">
+            <span style="font-size:.82rem;color:var(--text-secondary);">{{ mi.item.nome }}</span>
+            <span style="font-family:'DM Mono',monospace;font-size:.75rem;color:var(--text-muted);">x{{ mi.quantidade }}</span>
+        </div>
+        {% empty %}
+        <div style="padding:12px;text-align:center;font-size:.8rem;color:var(--text-muted);">Mochila vazia</div>
+        {% endfor %}
+        {% if m.mochilaitem_set.count > 5 %}
+        <div style="font-size:.75rem;color:var(--text-muted);text-align:center;padding:4px;">
+            +{{ m.mochilaitem_set.count|add:"-5" }} item(ns) adicionais
+        </div>
+        {% endif %}
+        </div>
+
+        <div style="display:flex;gap:8px;">
+            <a href="{% url 'mochila_detail' m.pk %}" class="btn btn-ghost btn-sm" style="flex:1;justify-content:center;">
+                <i class="fa-solid fa-eye"></i> Ver detalhes
+            </a>
+            <a href="/admin/core/mochila/{{ m.pk }}/change/" class="btn btn-ghost btn-sm" title="Editar">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% else %}
+<div class="card">
+    <div class="empty-state">
+        <div class="icon"><i class="fa-solid fa-briefcase"></i></div>
+        <h3>Nenhuma mochila cadastrada</h3>
+        <p>Crie mochilas com os equipamentos para enviar às lojas.</p>
+        <a href="/admin/core/mochila/add/" class="btn btn-primary" style="margin-top:8px;">
+            <i class="fa-solid fa-plus"></i> Criar Mochila
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

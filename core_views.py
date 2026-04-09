@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Loja, Item, Mochila, Viagem, ChecklistItem, MochilaItem
+from .core.models import Loja, Item, Mochila, Viagem, ChecklistItem, MochilaItem
 
 
 # ─── DASHBOARD ──────────────────────────────────────────────────────────────
@@ -99,7 +99,7 @@ def viagem_create(request):
                 mochila=form.cleaned_data["mochila"],
             )
             messages.success(request, f"Viagem #{viagem.id} registrada com sucesso!")
-            return redirect("viagem_detail", pk=viagem.pk)
+            return redirect("core:viagem_detail", pk=viagem.pk)
     else:
         form = ViagemForm()
 
@@ -119,7 +119,7 @@ def viagem_checklist_save(request, pk):
             ci.observacao_retorno = request.POST.get(f"obs_{ci.id}", "")
             ci.save()
         messages.success(request, "Checklist salvo com sucesso!")
-    return redirect("viagem_detail", pk=pk)
+    return redirect("core:viagem_detail", pk=pk)
 
 
 @login_required
@@ -129,7 +129,7 @@ def viagem_finalizar(request, pk):
     viagem.data_retorno = timezone.now()
     viagem.save()
     messages.success(request, f"Viagem #{viagem.id} finalizada!")
-    return redirect("viagem_detail", pk=pk)
+    return redirect("core:viagem_detail", pk=pk)
 
 
 # ─── MOCHILAS ────────────────────────────────────────────────────────────────

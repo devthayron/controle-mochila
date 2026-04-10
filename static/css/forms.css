@@ -1,0 +1,83 @@
+/* ─────────────────────────────────────────────────────────
+   forms.css — Campos, labels, toggle e search bar
+   ───────────────────────────────────────────────────────── */
+
+/* ─── Grid e grupos ────────────────────────────────────── */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+.form-group      { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+
+/* ─── Label ────────────────────────────────────────────── */
+label {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .6px;
+}
+
+/* ─── Inputs, select, textarea ─────────────────────────── */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="search"],
+select,
+textarea {
+    background: var(--bg-base);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: .875rem;
+    padding: 9px 12px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--ap-red);
+    box-shadow: 0 0 0 3px rgba(200,16,46,.15);
+}
+select option { background: var(--bg-card); }
+textarea       { resize: vertical; min-height: 80px; }
+
+/* ─── Toggle (checkbox) ────────────────────────────────── */
+.toggle-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+
+.toggle { position: relative; width: 36px; height: 20px; }
+.toggle input { display: none; }
+
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: var(--border-light);
+    border-radius: 20px;
+    transition: background .2s;
+}
+.toggle-slider::after {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    top: 3px; left: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s;
+}
+.toggle input:checked + .toggle-slider           { background: var(--accent-green); }
+.toggle input:checked + .toggle-slider::after    { transform: translateX(16px); }
+
+/* ─── Search bar ───────────────────────────────────────── */
+.search-bar { position: relative; }
+.search-bar i {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: .8rem;
+    pointer-events: none;
+}
+.search-bar input { padding-left: 32px; min-width: 220px; }

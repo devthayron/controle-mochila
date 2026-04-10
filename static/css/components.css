@@ -1,0 +1,105 @@
+/* ─────────────────────────────────────────────────────────
+   components.css — Badges, alerts, empty state, progress,
+                    detail grid
+   ───────────────────────────────────────────────────────── */
+
+/* ─── Badges / Status ──────────────────────────────────── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: .72rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+
+.badge-green        { background: rgba(34,197,94,.12);  color: #4ADE80; }
+.badge-green::before  { background: #4ADE80; }
+
+.badge-amber        { background: rgba(245,158,11,.12); color: #FCD34D; }
+.badge-amber::before  { background: #FCD34D; }
+
+.badge-red          { background: rgba(200,16,46,.12);  color: var(--ap-red-light); }
+.badge-red::before    { background: var(--ap-red-light); }
+
+.badge-blue         { background: rgba(59,130,246,.12); color: #60A5FA; }
+.badge-blue::before   { background: #60A5FA; }
+
+.badge-muted        { background: var(--bg-hover); color: var(--text-muted); }
+.badge-muted::before  { background: var(--text-muted); }
+
+/* ─── Alerts ───────────────────────────────────────────── */
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    font-size: .855rem;
+    margin-bottom: 20px;
+    border: 1px solid;
+}
+.alert i { margin-top: 1px; flex-shrink: 0; }
+
+.alert-success { background: rgba(34,197,94,.08);  border-color: rgba(34,197,94,.25); color: #4ADE80; }
+.alert-error   { background: rgba(200,16,46,.08);  border-color: rgba(200,16,46,.25); color: var(--ap-red-light); }
+.alert-info    { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.25); color: #60A5FA; }
+
+/* ─── Empty state ──────────────────────────────────────── */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    gap: 12px;
+}
+.empty-state .icon {
+    width: 56px; height: 56px;
+    border-radius: var(--radius-md);
+    background: var(--bg-hover);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.empty-state h3 { font-size: .95rem; font-weight: 600; }
+.empty-state p  { font-size: .83rem; color: var(--text-secondary); max-width: 300px; }
+
+/* ─── Progress bar ─────────────────────────────────────── */
+.progress-bar {
+    height: 6px;
+    background: var(--bg-hover);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--ap-red);
+    transition: width .4s ease;
+}
+.progress-fill.green { background: var(--accent-green); }
+.progress-fill.amber { background: var(--accent-amber); }
+
+/* ─── Detail grid ──────────────────────────────────────── */
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+.detail-field label {
+    display: block;
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    margin-bottom: 5px;
+}
+.detail-field .val { font-size: .9rem; font-weight: 500; color: var(--text-primary); }

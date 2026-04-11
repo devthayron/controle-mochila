@@ -24,7 +24,7 @@
 
 {% if mochilas %}
 
-<div class="mochila-grid">
+<div class="{% if mochilas|length >= 5 %}mochila-carousel{% else %}mochila-grid{% endif %}">
 
     {% for m in mochilas %}
     <div class="card mochila-card">

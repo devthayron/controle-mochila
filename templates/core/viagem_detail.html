@@ -30,9 +30,12 @@
             <i class="fa-solid fa-arrow-left"></i> Voltar
         </a>
         {% if viagem.status == 'andamento' %}
-        <a href="{% url 'viagem_finalizar' viagem.pk %}" class="btn btn-success">
-            <i class="fa-solid fa-check"></i> Finalizar Viagem
-        </a>
+        <form method="post" action="{% url 'viagem_finalizar' viagem.pk %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-check"></i> Finalizar Viagem
+            </button>
+        </form>
         {% endif %}
     </div>
 </div>
@@ -213,3 +216,4 @@
 {% endif %}
 
 {% endblock %}
+finalizar

@@ -81,7 +81,7 @@
                 <td>
                     <div style="display:flex;align-items:center;gap:9px;">
                         <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ap-red),var(--accent-purple));display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;flex-shrink:0;">
-                            {{ v.responsavel.username|slice:":2"|upper }}
+                            {{ v.responsavel.username|slice:":1"|upper }}
                         </div>
                         <span style="font-weight:500;">{{ v.responsavel.get_full_name|default:v.responsavel.username }}</span>
                     </div>
@@ -109,14 +109,17 @@
                     {% endwith %}
                 </td>
                 <td>
-                    <div style="display:flex;gap:6px;">
-                        <a href="{% url 'viagem_detail' v.pk %}" class="btn btn-ghost btn-sm" title="Ver detalhes">
+                    <div style="display:flex;gap:4px;">
+                        <a href="{% url 'viagem_detail' v.pk %}" class="btn btn-ghost btn" title="Ver detalhes">
                             <i class="fa-solid fa-eye"></i>
                         </a>
                         {% if v.status == 'andamento' %}
-                        <a href="{% url 'viagem_finalizar' v.pk %}" class="btn btn-success btn-sm" title="Finalizar">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
+                        <form method="POST" action="{% url 'viagem_finalizar' v.pk %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn" title="Finalizar">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </form>
                         {% endif %}
                     </div>
                 </td>
@@ -162,3 +165,5 @@
     {% endif %}
 </div>
 {% endblock %}
+
+finalizar

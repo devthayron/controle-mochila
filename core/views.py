@@ -79,6 +79,7 @@ class ViagemListView(LoginRequiredMixin, ListView):
     model = Viagem
     template_name = "core/viagem_list.html"
     context_object_name = "viagens"
+    paginate_by = 5
 
     def get_queryset(self):
         qs = Viagem.objects.select_related(
@@ -150,14 +151,19 @@ class ViagemCreateView(LoginRequiredMixin, CreateView):
 @method_decorator(require_POST, name='dispatch')
 class FinalizarViagemView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        viagem = get_object_or_404(Viagem, pk=pk, status="andamento")
+        viagem = get_object_or_404(Viagem, pk=pk)
+
+        # validação de estado (evita 404 falso e bug silencioso)
+        if viagem.status != "andamento":
+            messages.error(request, "Essa viagem não está em andamento.")
+            return redirect("viagem_detail", pk=pk)
+
         viagem.status = "finalizada"
         viagem.data_retorno = timezone.now()
-        viagem.save()
+        viagem.save(update_fields=["status", "data_retorno"])
 
-        messages.success(request, "Viagem finalizada!")
+        messages.success(request, "Viagem finalizada com sucesso!")
         return redirect("viagem_detail", pk=pk)
-
 
 class ChecklistSaveView(LoginRequiredMixin, View):
     def post(self, request, pk):

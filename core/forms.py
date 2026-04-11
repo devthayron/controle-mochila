@@ -1,13 +1,21 @@
 from django import forms
-from django.contrib.admin.widgets import FilteredSelectMultiple
-from .models import Mochila, Item
+from .models import Mochila, Item, Viagem
 
 class MochilaForm(forms.ModelForm):
     itens = forms.ModelMultipleChoiceField(
-        queryset=Item.objects.all(),
-        widget=FilteredSelectMultiple("Itens", is_stacked=False)
+        queryset=Item.objects.all().order_by("nome"),
+        widget=forms.SelectMultiple(attrs={
+            "class": "multi-select"
+        })
     )
 
     class Meta:
         model = Mochila
-        fields = ['nome', 'itens']
+        fields = ["nome", "itens"]
+
+
+
+class ViagemForm(forms.ModelForm):
+    class Meta:
+        model = Viagem
+        fields = ["responsavel", "loja", "mochila"]

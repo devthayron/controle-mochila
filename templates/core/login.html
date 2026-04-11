@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <!-- TOKENS (OBRIGATÓRIO) -->
+    <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+
+    <!-- SEU CSS -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+<div class="login-container">
+
+    <div class="login-box">
+        <h1>Entrar</h1>
+        <p>Acesse o sistema</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.username }}
+            {{ form.password }}
+
+            {% if form.errors %}
+                <div class="error">
+                    Usuário ou senha inválidos
+                </div>
+            {% endif %}
+
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

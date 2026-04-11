@@ -1,25 +1,29 @@
 from django.urls import path
-from . import views
-
+from .views import *
 
 urlpatterns = [
-    # Dashboard
-    path("", views.dashboard, name="dashboard"),
+    # AUTH
+    path("login/", CustomLoginView.as_view(), name="login"),
+    path("logout/", CustomLogoutView.as_view(), name="logout"),
 
-    # Viagens
-    path("viagens/",                        views.viagem_list,           name="viagem_list"),
-    path("viagens/nova/",                   views.viagem_create,         name="viagem_create"),
-    path("viagens/<int:pk>/",               views.viagem_detail,         name="viagem_detail"),
-    path("viagens/<int:pk>/checklist/",     views.viagem_checklist_save, name="viagem_checklist_save"),
-    path("viagens/<int:pk>/finalizar/",     views.viagem_finalizar,      name="viagem_finalizar"),
+    # DASHBOARD
+    path("", DashboardView.as_view(), name="dashboard"),
 
-    # Mochilas
-    path("mochilas/",                       views.mochila_list,          name="mochila_list"),
-    path("mochilas/<int:pk>/",              views.mochila_detail,        name="mochila_detail"),
+    # VIAGENS
+    path("viagens/", ViagemListView.as_view(), name="viagem_list"),
+    path("viagens/nova/", ViagemCreateView.as_view(), name="viagem_create"),
+    path("viagens/<int:pk>/", ViagemDetailView.as_view(), name="viagem_detail"),
+    path("viagens/<int:pk>/finalizar/", FinalizarViagemView.as_view(), name="viagem_finalizar"),
+    path("viagens/<int:pk>/checklist/", ChecklistSaveView.as_view(), name="viagem_checklist_save"),
 
-    # Itens
-    path("itens/",                          views.item_list,             name="item_list"),
+    # MOCHILAS
+    path("mochilas/", MochilaListView.as_view(), name="mochila_list"),
+    path("mochilas/<int:pk>/", MochilaDetailView.as_view(), name="mochila_detail"),
+    path("mochilas/nova/", MochilaCreateView.as_view(), name="mochila_create"),
 
-    # Lojas
-    path("lojas/",                          views.loja_list,             name="loja_list"),
+    # ITENS
+    path("itens/", ItemListView.as_view(), name="item_list"),
+
+    # LOJAS
+    path("lojas/", LojaListView.as_view(), name="loja_list"),
 ]

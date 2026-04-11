@@ -3,22 +3,44 @@
    ───────────────────────────────────────────────────────── */
 
 /**
- * Abre/fecha a sidebar em telas pequenas (mobile).
+ * Toggle da sidebar (mobile)
  */
 function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('open');
+    }
 }
 
 /**
- * Fecha a sidebar ao clicar fora dela.
+ * Inicialização geral da aplicação
  */
-document.addEventListener('click', function (e) {
-    const sidebar = document.getElementById('sidebar');
-    const isOpen  = sidebar.classList.contains('open');
-    const clickedOutside = !sidebar.contains(e.target);
-    const clickedHamburger = e.target.closest('.hamburger');
+document.addEventListener("DOMContentLoaded", function () {
 
-    if (isOpen && clickedOutside && !clickedHamburger) {
-        sidebar.classList.remove('open');
+    const sidebar = document.getElementById('sidebar');
+
+    /* ─── FECHAR SIDEBAR AO CLICAR FORA ─── */
+    document.addEventListener('click', function (e) {
+        if (!sidebar) return;
+
+        const isOpen = sidebar.classList.contains('open');
+        const clickedOutside = !sidebar.contains(e.target);
+        const clickedHamburger = e.target.closest('.hamburger');
+
+        if (isOpen && clickedOutside && !clickedHamburger) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    /* ─── LOGOUT ─── */
+    const logoutBtn = document.querySelector(".js-logout");
+    const logoutForm = document.getElementById("logout-form");
+
+    if (logoutBtn && logoutForm) {
+        logoutBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            logoutForm.submit();
+        });
     }
+
 });

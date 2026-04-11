@@ -103,3 +103,153 @@
     margin-bottom: 5px;
 }
 .detail-field .val { font-size: .9rem; font-weight: 500; color: var(--text-primary); }
+
+/* ─────────────────────────────
+   MOCHILA GRID (CENTRALIZADO LIMPO)
+───────────────────────────── */
+
+.mochila-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+
+    width: 100%;
+    padding: 20px 0;
+}
+/* responsivo consistente */
+@media (max-width: 1000px) {
+    .mochila-grid {
+        grid-template-columns: repeat(2, 280px);
+    }
+}
+
+@media (max-width: 650px) {
+    .mochila-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─────────────────────────────
+   CARD BASE
+───────────────────────────── */
+
+.mochila-card {
+    width: 100%;
+    max-width: 280px;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 240px;
+
+    transition: transform .2s ease;
+}
+
+.mochila-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ─────────────────────────────
+   HEADER (ÍCONE ESQUERDA + TEXTO CENTRAL)
+───────────────────────────── */
+
+.mochila-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 14px;
+}
+
+/* mantém ícone sempre à esquerda fixo */
+.mochila-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(59,130,246,.12);
+    border-radius: 10px;
+    color: #60A5FA;
+}
+
+/* texto centralizado dentro do espaço dele */
+.mochila-title-wrap {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.mochila-title {
+    font-weight: 700;
+    font-size: .95rem;
+}
+
+.mochila-sub {
+    font-size: .75rem;
+    color: var(--text-muted);
+}
+
+/* ─────────────────────────────
+   ITEMS
+───────────────────────────── */
+
+.mochila-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    margin: 10px 0 14px;
+}
+
+.mochila-item {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 7px 10px;
+
+    border-radius: 6px;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+}
+
+.item-name {
+    font-size: .82rem;
+    color: var(--text-secondary);
+}
+
+.item-qtd {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    color: var(--text-muted);
+}
+
+/* vazio */
+.mochila-empty {
+    text-align: center;
+    padding: 12px;
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+/* ─────────────────────────────
+   ACTIONS (CENTRALIZADO REAL)
+───────────────────────────── */
+
+.mochila-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: auto;
+}

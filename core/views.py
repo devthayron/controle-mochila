@@ -191,20 +191,22 @@ class MochilaCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         with transaction.atomic():
-            response = super().form_valid(form)
+            self.object = form.save(commit=False)
+            self.object.save()
 
             itens = form.cleaned_data["itens"]
+
+            MochilaItem.objects.filter(mochila=self.object).delete()
 
             MochilaItem.objects.bulk_create([
                 MochilaItem(
                     mochila=self.object,
                     item=item,
                     quantidade=1
-                ) for item in itens
+                )
+                for item in itens
             ])
-
-        return response
-
+        return redirect(self.get_success_url())
 
 class MochilaDetailView(LoginRequiredMixin, DetailView):
     model = Mochila
